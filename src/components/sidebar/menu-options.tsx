@@ -266,7 +266,10 @@ const MenuOptions = ({
                       val = <result.path />;
                     }
                     return (
-                      <CommandItem key={sidebarOptions.id} className="w-full">
+                      <CommandItem
+                        key={sidebarOptions.id}
+                        className="w-full  aria-selected:text-accent"
+                      >
                         <Link
                           href={sidebarOptions.link}
                           className="flex items-center gap-2  rounded-md  md:w-full w-[320px]"

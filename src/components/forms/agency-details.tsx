@@ -55,7 +55,7 @@ type Props = {
 };
 
 const FormSchema = z.object({
-  name: z.string().min(2, { message: "Agency name must be atleast 2 chars." }),
+  name: z.string().min(2, { message: "Agency name must be at least 2 chars." }),
   companyEmail: z.string().min(1),
   companyPhone: z.string().min(1),
   whiteLabel: z.boolean(),
@@ -99,42 +99,42 @@ const AgencyDetails = ({ data }: Props) => {
     try {
       let newUserData;
       let custId;
-      // if (!data?.id) {
-      //   const bodyData = {
-      //     email: values.companyEmail,
-      //     name: values.name,
-      //     shipping: {
-      //       address: {
-      //         city: values.city,
-      //         country: values.country,
-      //         line1: values.address,
-      //         postal_code: values.zipCode,
-      //         state: values.zipCode,
-      //       },
-      //       name: values.name,
-      //     },
-      //     address: {
-      //       city: values.city,
-      //       country: values.country,
-      //       line1: values.address,
-      //       postal_code: values.zipCode,
-      //       state: values.zipCode,
-      //     },
-      //   };
-      //   const customerResponse = await fetch("/api/stripe/create-customer", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify(bodyData),
-      //   });
-      //   const customerData: { customerId: string } =
-      //     await customerResponse.json();
-      //   custId = customerData.customerId;
-      // }
+      if (!data?.id) {
+        const bodyData = {
+          email: values.companyEmail,
+          name: values.name,
+          shipping: {
+            address: {
+              city: values.city,
+              country: values.country,
+              line1: values.address,
+              postal_code: values.zipCode,
+              state: values.zipCode,
+            },
+            name: values.name,
+          },
+          address: {
+            city: values.city,
+            country: values.country,
+            line1: values.address,
+            postal_code: values.zipCode,
+            state: values.zipCode,
+          },
+        };
+        const customerResponse = await fetch("/api/stripe/create-customer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyData),
+        });
+        const customerData: { customerId: string } =
+          await customerResponse.json();
+        custId = customerData.customerId;
+      }
       newUserData = await initUser({ role: "AGENCY_OWNER" });
       console.log(newUserData);
-      // if (!data?.customerId && !custId) return;
+      if (!data?.customerId && !custId) return;
       const response = await upsertAgency({
         id: data?.id ? data.id : v4(),
         customerId: data?.customerId || custId || "",
@@ -154,7 +154,7 @@ const AgencyDetails = ({ data }: Props) => {
         goal: 5,
       });
       toast({
-        title: "Created Agency",
+        title: data?.id ? "Updated Agency" : "Created Agency",
       });
       if (data?.id) return router.refresh();
       if (response) {

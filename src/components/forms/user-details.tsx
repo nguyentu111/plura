@@ -1,6 +1,6 @@
 "use client";
 import {
-  AuthUserWithAgencySigebarOptionsSubAccounts,
+  AuthUserWithAgencySidebarOptionsSubAccounts,
   UserWithPermissionsAndSubAccounts,
 } from "@/lib/types";
 import { useModal } from "@/providers/modal-provider";
@@ -65,12 +65,12 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
   const [roleState, setRoleState] = useState("");
   const [loadingPermissions, setLoadingPermissions] = useState(false);
   const [authUserData, setAuthUserData] =
-    useState<AuthUserWithAgencySigebarOptionsSubAccounts | null>(null);
+    useState<AuthUserWithAgencySidebarOptionsSubAccounts | null>(null);
   const { toast } = useToast();
   const router = useRouter();
 
   //Get authUSerDtails
-
+  console.log({ userData });
   useEffect(() => {
     if (data.user) {
       const fetchDetails = async () => {
@@ -153,7 +153,7 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
     if (response) {
       toast({
         title: "Success",
-        description: "The request was successfull",
+        description: "Updated permisstions",
       });
       if (subAccountPermissions) {
         subAccountPermissions.Permissions.find((perm) => {
@@ -193,7 +193,7 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
       if (updatedUser) {
         toast({
           title: "Success",
-          description: "Update User Information",
+          description: "Updated user information",
         });
         setClose();
         router.refresh();

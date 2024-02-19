@@ -113,7 +113,8 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({
       });
 
       setClose();
-      router.refresh();
+      if (details?.id) router.refresh();
+      else router.push(`/subaccount/${response.id}`);
     } catch (error) {
       toast({
         variant: "destructive",
