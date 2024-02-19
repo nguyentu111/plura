@@ -10,13 +10,13 @@ import clsx from "clsx";
 import { Check } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-// import { stripe } from "@/lib/stripe";
+import { stripe } from "@/lib/stripe";
 import { pricingCards } from "@/lib/constants";
 export default async function Home() {
-  // const prices = await stripe.prices.list({
-  //   product: process.env.NEXT_PLURA_PRODUCT_ID,
-  //   active: true,
-  // });
+  const prices = await stripe.prices.list({
+    product: process.env.NEXT_PLURA_PRODUCT_ID,
+    active: true,
+  });
 
   return (
     <div>
@@ -53,18 +53,18 @@ export default async function Home() {
           ready to commit you can get started for free.
         </p>
         <div className="flex  justify-center gap-4 flex-wrap mt-6 select-none ">
-          {/* {prices.data.map((card) => (
+          {prices.data.map((card) => (
             //WIP: Wire up free product from stripe
             <Card
               key={card.nickname}
-              className={clsx('w-[300px] flex flex-col justify-between', {
-                'border-2 border-primary': card.nickname === 'Unlimited Saas',
+              className={clsx("w-[300px] flex flex-col justify-between", {
+                "border-2 border-primary": card.nickname === "Unlimited Saas",
               })}
             >
               <CardHeader>
                 <CardTitle
-                  className={clsx('', {
-                    'text-muted-foreground': card.nickname !== 'Unlimited Saas',
+                  className={clsx("", {
+                    "text-muted-foreground": card.nickname !== "Unlimited Saas",
                   })}
                 >
                   {card.nickname}
@@ -89,10 +89,7 @@ export default async function Home() {
                   {pricingCards
                     .find((c) => c.title === card.nickname)
                     ?.features.map((feature) => (
-                      <div
-                        key={feature}
-                        className="flex gap-2"
-                      >
+                      <div key={feature} className="flex gap-2">
                         <Check />
                         <p>{feature}</p>
                       </div>
@@ -101,10 +98,10 @@ export default async function Home() {
                 <Link
                   href={`/agency?plan=${card.id}`}
                   className={clsx(
-                    'w-full text-center bg-primary p-2 rounded-md',
+                    "w-full text-center bg-primary p-2 rounded-md",
                     {
-                      '!bg-muted-foreground':
-                        card.nickname !== 'Unlimited Saas',
+                      "!bg-muted-foreground":
+                        card.nickname !== "Unlimited Saas",
                     }
                   )}
                 >
@@ -112,7 +109,7 @@ export default async function Home() {
                 </Link>
               </CardFooter>
             </Card>
-          ))} */}
+          ))}
           <Card className={clsx("w-[300px] flex flex-col justify-between")}>
             <CardHeader>
               <CardTitle
